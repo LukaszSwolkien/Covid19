@@ -1,0 +1,7 @@
+---
+# Dataset maintained by the European Centre for Disease Prevention and Control (ECDC)
+CASE_DISTRIBUTION_URL: "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/"
+HOSPITAL_ADMISSION_RATES_URL: "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/json/"
+COVID19_TESTING_URL: "https://opendata.ecdc.europa.eu/covid19/testing/json/"
+
+
