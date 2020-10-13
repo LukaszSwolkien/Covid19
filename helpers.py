@@ -3,9 +3,9 @@ import locale
 
 
 def to_date(d):
-    year = d['year']
-    month = d['month']
-    day = d['day']
+    year = to_num(d["year"])
+    month = to_num(d["month"])
+    day = to_num(d["day"])
     return date(day=day, month=month, year=year)
 
 

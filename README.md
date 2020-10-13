@@ -1,5 +1,5 @@
 # Covid19
-This is example code to analyse covid19 public data with opentelemetry monitoring
+This is example code to analyse covid19 public data with opentelemetry monitoring. The aim is to check on distributed tracing and the ability to correlate a trace across multiple services
 
 
 ### Install and run telemetry backend
