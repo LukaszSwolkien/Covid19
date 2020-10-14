@@ -1,4 +1,6 @@
 from datetime import date
+from functools import wraps
+from opentelemetry import trace
 import locale
 
 
@@ -11,6 +13,24 @@ def to_date(d):
 
 def week_number(d):
     return d.isocalendar()[1]
+
+
+def trace_function(name, module_name=__name__):
+    tracer = trace.get_tracer(module_name)
+
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwds):
+            with tracer.start_as_current_span(name) as root:
+                try:
+                    return func(*args, **kwds)
+                except Exception as e:
+                    print(root.get_context()) # SpanContext can help to link traces with 
+                    raise e
+
+        return wrapper
+
+    return decorator
 
 
 def is_int(s):

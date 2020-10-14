@@ -1,10 +1,10 @@
 # COVID-19 data service
 
-This data service collects data on confirmed cases, deaths, tests, hospitalization rates from multiple sources. Includes methods of data analysis to produce meaningful trend graphs and meaningful comparisons between countries based on their population.
+This code collects data on confirmed cases, deaths, tests, hospitalization rates from multiple sources. Includes methods of data analysis to produce meaningful trend graphs and meaningful comparisons between countries based on their population.
 
-There are plenty of web pages giving all of those data already. The aim of this code is to give full flexibility in the analysis using jupyter lab/notebook for the engineers or data scientists.
+There are many websites already providing all this data. The purpose of this code is to provide complete flexibility in jupyter lab / notebook analysis for anyone with Python skills who want to check data for themselves
 
-It also has opentelemetry monitoring setup to capture service telemetry data to better observe and debug issues with data ingestion from multiple sources and then data processing.
+It also has opentelemetry tracing to better observe and debug issues. This service is simple but makes a few data sourcing calls and then calls several data processing methods so is a good place to check opentelemetry-python implementation
 
 ## Setup project
 
