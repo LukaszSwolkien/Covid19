@@ -13,18 +13,18 @@ RequestsInstrumentor().instrument()
 trace.set_tracer_provider(TracerProvider())
 
 jaeger_exporter = jaeger.JaegerSpanExporter(
-    service_name="covid19-open-data-service",
+    service_name="COVID-19-run.py",
     agent_host_name="localhost",
     agent_port=6831,
 )
 
 span_processor = BatchExportSpanProcessor(jaeger_exporter)
 trace.get_tracer_provider().add_span_processor(span_processor)
-tracer = trace.get_tracer("covid19")
+tracer = trace.get_tracer("COVID-19")
 
 # with tracer.start_as_current_span('World case distribution'):
-cases = ecdc.cases_by_country()
 with tracer.start_as_current_span(f"Poland weekly"):
+    cases = ecdc.cases_by_country()
     testing = ecdc.testing_by_country_weekly()
     hospital_rates = ecdc.hospitel_admission_rates_weekly()
 

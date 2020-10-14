@@ -24,7 +24,11 @@ Run jupyter lab
 
 ### Install and run telemetry backend
 
+Run jaeger backend from docker
 `sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one`
+
+Run Jaeger UI
+`http://localhost:16686/`
 
 ## Contributing
 
