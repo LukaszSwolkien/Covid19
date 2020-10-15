@@ -32,20 +32,4 @@ Run Jaeger UI
 
 ## Contributing
 
-You can contribute in the following ways:
-
-* write documentation
-* implement features
-* fix bugs
-* add tests
-* give suggestions, share ideas etc...
-
-Please format commit message using the conventional-changelog.
-
-## Code style
-
-Please use black as code formatter,
-
-`pip install black`
-
-`black .`
+Read [how can you contribute](CONTRIBUTING.md)
