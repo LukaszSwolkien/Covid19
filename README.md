@@ -4,7 +4,6 @@ This code collects data on confirmed cases, deaths, tests, hospitalization rates
 
 There are many websites already providing all this data. The purpose of this code is to provide complete flexibility in jupyter lab / notebook analysis for anyone with Python skills who want to check data for themselves
 
-It also has opentelemetry tracing to better observe and debug issues. This service is simple but makes a few data sourcing calls and then calls several data processing methods so is a good place to check opentelemetry-python implementation
 
 ## Setup project
 
@@ -24,7 +23,9 @@ Run jupyter lab
 
 ### (Optional) install and run telemetry backend
 
-This is **optional** step for someone who wants to play around with opentelemetry and observe the functions being tracked
+This code has opentelemetry tracing embeded to better observe and debug issues. This service is simple but makes a few data sourcing calls and then calls several data processing methods so is a good place to check opentelemetry-python implementation.
+
+Please note: This is **optional** step for someone who wants to play around with opentelemetry and observe the functions being tracked. 
 
 * run Jaeger backend from docker
 
