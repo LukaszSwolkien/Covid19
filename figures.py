@@ -6,12 +6,25 @@ import helpers
 MODE_LINES_N_MARKERS = "lines+markers"
 
 
-@helpers.trace_function('Cases and active graph')
+@helpers.trace_function("Cases and active graph")
 def cases_and_active(df, days_no, title):
     fig_cNa = go.Figure()
-    
-    fig_cNa.add_traces(go.Bar(x=df['Date'][-days_no:], y = df['Confirmed daily'][-days_no:],name='Confirmed'))
-    fig_cNa.add_traces(go.Scatter(x=df['Date'][-days_no:], y = df['Active'][-days_no:], mode = MODE_LINES_N_MARKERS, name='Active'))
+
+    fig_cNa.add_traces(
+        go.Bar(
+            x=df["Date"][-days_no:],
+            y=df["Confirmed daily"][-days_no:],
+            name="Confirmed",
+        )
+    )
+    fig_cNa.add_traces(
+        go.Scatter(
+            x=df["Date"][-days_no:],
+            y=df["Active"][-days_no:],
+            mode=MODE_LINES_N_MARKERS,
+            name="Active",
+        )
+    )
 
     fig_cNa.update_layout(
         title=title,
@@ -21,12 +34,26 @@ def cases_and_active(df, days_no, title):
     return fig_cNa
 
 
-@helpers.trace_function('Deaths and recovered graph')
+@helpers.trace_function("Deaths and recovered graph")
 def deaths_and_recovered(df, days_no, title):
     fig_rNd = go.Figure()
 
-    fig_rNd.add_traces(go.Scatter(x=df['Date'][-days_no:], y = df['Recovered'][-days_no:], mode = MODE_LINES_N_MARKERS, name='Recovered'))
-    fig_rNd.add_traces(go.Scatter(x=df['Date'][-days_no:], y = df['Deaths daily'][-days_no:], mode = MODE_LINES_N_MARKERS, name='Deaths'))
+    fig_rNd.add_traces(
+        go.Scatter(
+            x=df["Date"][-days_no:],
+            y=df["Recovered"][-days_no:],
+            mode=MODE_LINES_N_MARKERS,
+            name="Recovered",
+        )
+    )
+    fig_rNd.add_traces(
+        go.Scatter(
+            x=df["Date"][-days_no:],
+            y=df["Deaths daily"][-days_no:],
+            mode=MODE_LINES_N_MARKERS,
+            name="Deaths",
+        )
+    )
 
     fig_rNd.update_layout(
         title=title,
@@ -36,11 +63,18 @@ def deaths_and_recovered(df, days_no, title):
     return fig_rNd
 
 
-@helpers.trace_function('Quarantined graph')
+@helpers.trace_function("Quarantined graph")
 def quarantined(df, days_no, title):
     fig_tested = go.Figure()
 
-    fig_tested.add_traces(go.Scatter(x=df['Date'][-days_no:], y = df['Quarantined'][-days_no:], mode = 'lines+markers', name='Quarantined'))
+    fig_tested.add_traces(
+        go.Scatter(
+            x=df["Date"][-days_no:],
+            y=df["Quarantined"][-days_no:],
+            mode="lines+markers",
+            name="Quarantined",
+        )
+    )
 
     fig_tested.update_layout(
         title=title,
@@ -50,7 +84,7 @@ def quarantined(df, days_no, title):
     return fig_tested
 
 
-@helpers.trace_function('Case distribution graph')
+@helpers.trace_function("Case distribution graph")
 def case_distribution(data: list, title: str) -> go.Figure:
     fig = go.Figure()
 
@@ -64,8 +98,7 @@ def case_distribution(data: list, title: str) -> go.Figure:
             )
         )
     except KeyError:
-        print(f'Skipping hospital admittion rates due to missing data')
-        
+        print(f"Skipping hospital admittion rates due to missing data")
 
     fig.add_trace(
         go.Scatter(
@@ -88,7 +121,7 @@ def case_distribution(data: list, title: str) -> go.Figure:
     return fig
 
 
-@helpers.trace_function('Case distribution multi-graph')
+@helpers.trace_function("Case distribution multi-graph")
 def case_distribution_subplots(data: list, sub_titles: list, title: str) -> go.Figure:
 
     assert len(data) == len(sub_titles)

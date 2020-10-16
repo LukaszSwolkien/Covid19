@@ -4,6 +4,7 @@ from helpers import trace_function
 
 # TODO: map ECDC schema to internal schema in all functions
 
+
 @trace_function("Get cases")
 def cases_by_country() -> list:
     cases = requests.get(url=settings.ECDC_CASE_DISTRIBUTION_URL)

@@ -37,6 +37,7 @@ def __trends_schema(data):
         for k, v in data.items()
     ]
 
+
 @trace_function("Aggregate monthly data")
 def monthly(data: list, country: str) -> list:
     selector = lambda x: x["countriesAndTerritories"] == country
@@ -48,6 +49,7 @@ def monthly(data: list, country: str) -> list:
     agg_data = __aggregate(lambda v: f'{v["month"]}/{v["year"]}', sorted_selected_data)
 
     return __trends_schema(agg_data)
+
 
 @trace_function("Curate data for daily load")
 def daily(cases: list, country: str) -> list:

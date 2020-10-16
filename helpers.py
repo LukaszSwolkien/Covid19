@@ -25,7 +25,9 @@ def trace_function(name, module_name=__name__):
                 try:
                     return func(*args, **kwds)
                 except Exception as e:
-                    print(root.get_context()) # SpanContext can help to link traces with 
+                    print(
+                        root.get_context()
+                    )  # SpanContext can help to link traces with
                     raise e
 
         return wrapper
