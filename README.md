@@ -22,7 +22,9 @@ Run jupyter lab
 
 `jupyter lab`
 
-### Install and run telemetry backend
+### Install and run telemetry backend (Optional)
+
+This is optional for someone who wants to play around with opentelemetry and observe the functions being tracked
 
 Run jaeger backend from docker
 `sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one`
