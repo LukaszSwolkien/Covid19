@@ -22,16 +22,24 @@ Run jupyter lab
 
 `jupyter lab`
 
-### Install and run telemetry backend (Optional)
+### (Optional) install and run telemetry backend
 
-This is optional for someone who wants to play around with opentelemetry and observe the functions being tracked
+This is **optional** step for someone who wants to play around with opentelemetry and observe the functions being tracked
 
-Run jaeger backend from docker
+* run Jaeger backend from docker
+
 `sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one`
 
-Run Jaeger UI
+* run Jaeger UI
+
 `http://localhost:16686/`
+
+* run `jupyther lab` then open `notebooks/ternds.ipynb` and go to above Jaeger UI to choose following service:
+
+`COVID-19-notebook`
+
+* browse details in `COVID-19-notebook: Poland daily` and `COVID-19-notebook: Countries weekly` to see all operations, durations and tags
 
 ## Contributing
 
-Read [how can you contribute](CONTRIBUTING.md)
+Read [how you can contribute](CONTRIBUTING.md)
