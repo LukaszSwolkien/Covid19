@@ -1,13 +1,5 @@
 # COVID-19 data service
-    df[QUARANTINED] = df[QUARANTINED].apply(format_number)
-    df[MONITORED] = df[MONITORED].apply(format_number)
-    df[TESTED_TOTAL] = df[TESTED_TOTAL].apply(format_number)
-    df[CONFIRMED_DAILY] = df[CONFIRMED_DAILY].apply(format_number)
-    df[CONFIRMED] = df[CONFIRMED].apply(format_number)
-    df[ACTIVE] = df[ACTIVE].apply(format_number)
-    df[RECOVERED] = df[RECOVERED].apply(format_number)
-    df[DEATHS_DAILY] = df[DEATHS_DAILY].apply(format_number)
-    
+   
 This code collects data on confirmed cases, deaths, tests, hospitalization rates, people quarantined, active and recovered (and more) from multiple sources. Includes methods of data analysis to produce meaningful trend graphs and meaningful comparisons between countries based on their population.
 
 There are many websites already providing all this data. The purpose of this code is to provide complete flexibility in jupyter lab / notebook analysis for anyone with Python skills who want to check data for themselves
