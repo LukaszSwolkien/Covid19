@@ -23,7 +23,7 @@ Run jupyter lab
 
 ### (Optional) install and run telemetry backend
 
-This code has opentelemetry tracing embeded to better observe and debug issues. This service is simple but makes a few data sourcing calls and then calls several data processing methods so is a good place to check opentelemetry-python implementation.
+This code has **opentelemetry** tracing embeded to better observe and debug issues. This service is simple but makes a few data sourcing calls and then calls several data processing methods so is a good place to check opentelemetry-python implementation.
 
 Please note: This is **optional** step for someone who wants to play around with opentelemetry and observe the functions being tracked. 
 
@@ -39,7 +39,7 @@ Please note: This is **optional** step for someone who wants to play around with
 
 `COVID-19-notebook`
 
-* browse details in `COVID-19-notebook: Poland daily` and `COVID-19-notebook: Countries weekly` to see all operations, durations and tags
+* browse details in `COVID-19-notebook: Poland daily` and `COVID-19-notebook: Countries weekly` to see all operations, durations of processing and tags
 
 ## Contributing
 
