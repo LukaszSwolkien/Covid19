@@ -21,7 +21,7 @@ def cases_and_active(df, days_no, title):
     return fig_cNa
 
 
-@helpers.trace_function('deaths and recovered graph')
+@helpers.trace_function('Deaths and recovered graph')
 def deaths_and_recovered(df, days_no, title):
     fig_rNd = go.Figure()
 
@@ -36,7 +36,7 @@ def deaths_and_recovered(df, days_no, title):
     return fig_rNd
 
 
-@helpers.trace_function('quarantined graph')
+@helpers.trace_function('Quarantined graph')
 def quarantined(df, days_no, title):
     fig_tested = go.Figure()
 
