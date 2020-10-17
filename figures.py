@@ -1,7 +1,7 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import helpers
-from helpers import is_num
+import poland_stats as pl
 
 
 MODE_LINES_N_MARKERS = "lines+markers"
@@ -24,6 +24,34 @@ def active_percentage(df, days_no, title):
     )
 
     return fig
+
+@helpers.trace_function("Active cases and quarantined percentage graph")
+def active_quarantined_percentage_chart(df, days_no):
+    fig = go.Figure()
+
+    fig.add_traces(
+        go.Scatter(
+            x=df["Date"][-days_no:],
+            y=df["Quarantined percentage"][-days_no:],
+            mode="lines+markers",
+            name="Quarantined",
+        )
+    )
+        
+    fig.add_traces(
+        go.Bar(
+            x=df["Date"][-days_no:],
+            y=df["Active percentage"][-days_no:],
+            name="Active",
+        )
+    )
+    fig.update_layout(
+        title='Poland active cases [%] of population',
+        legend_title="Legend",
+        yaxis_title="[%] of total population"
+    )
+    return fig
+
 
 @helpers.trace_function("Cases and active graph")
 def cases_and_active(df, days_no, title):
@@ -198,67 +226,6 @@ def case_distribution_subplots(data: list, country_labels: list, title: str) -> 
             row=n + 1,
             col=1,
         )
-    fig.update_layout(height=1200, width=1200, title_text=title)
+    fig.update_layout(height=1200, width=1000, title_text=title)
     return fig
 
-
-# @helpers.trace_function("Case distribution multi-graph in %")
-# def case_distribution_subplots_percentege(data: list, countries_pop: list, country_names: list, title: str) -> go.Figure:
-
-#     assert len(data) == len(country_names)
-#     N = len(country_names)
-
-#     fig = make_subplots(
-#         rows=len(country_names),
-#         cols=1,
-#         subplot_titles=country_names,
-#         shared_xaxes=True,
-#         vertical_spacing=0.05,
-#     )
-
-#     date_rep_counter = {}
-#     for d in data:
-#         for i in d:
-#             date_rep_counter[i["dateRep"]] = date_rep_counter.get(i["dateRep"], 0) + 1
-
-#     dateRep_common = [k for k, v in date_rep_counter.items() if v == N]
-
-#     for n in range(0, N):
-#         population = countries_pop[country_names[n]]
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
-#                 y=[
-#                     i["hospital_rate"]*100/population
-#                     for i in data[n]
-#                     if i["dateRep"] in dateRep_common and is_num(i["hospital_rate"])
-#                 ],
-#                 mode=MODE_LINES_N_MARKERS,
-#                 name=f"{country_names[n]} hospital rate",
-#             ),
-#             row=n + 1,
-#             col=1,
-#         )
-
-#         fig.add_trace(
-#             go.Scatter(
-#                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
-#                 y=[i["deaths"]*100/population for i in data[n] if i["dateRep"] in dateRep_common],
-#                 mode=MODE_LINES_N_MARKERS,
-#                 name=f"{country_names[n]} deaths",
-#             ),
-#             row=n + 1,
-#             col=1,
-#         )
-
-#         fig.add_trace(
-#             go.Bar(
-#                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
-#                 y=[i["cases"]*100/population for i in data[n] if i["dateRep"] in dateRep_common],
-#                 name=f"{country_names[n]} cases",
-#             ),
-#             row=n + 1,
-#             col=1,
-#         )
-#     fig.update_layout(height=1200, width=1200, title_text=title)
-#     return fig

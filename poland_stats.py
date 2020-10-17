@@ -16,6 +16,7 @@ RECOVERED = "Recovered"
 DEATHS_DAILY = "Deaths daily"
 
 
+@helpers.trace_function('Get Poland covid-19 timeline stats')
 def covid_19_timeline():
     dfs = pd.read_html(settings.WIKIPEDIA_POLAND_STATS_URL)
     df = dfs[2]
@@ -49,7 +50,6 @@ def covid_19_timeline():
 
     df["Date"] = df["Date"].apply(correct_date)
     df = df[df["Date"] != "invalid"]
-    # df['Date'] = pd.to_datetime(df['Date'], format=date_format).dt.strftime('%d/%m/%Y')
     df = df.set_index(pd.DatetimeIndex(df["Date"]))
 
     def format_number(x):

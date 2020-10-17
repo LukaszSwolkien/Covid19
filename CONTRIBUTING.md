@@ -42,7 +42,7 @@ Must be one of the following:
 
 Provide succinct description of the change
 
-## PR
+## Pull Request
 
 Make your changes in a new git branch
 
