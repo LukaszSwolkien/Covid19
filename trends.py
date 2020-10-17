@@ -1,6 +1,7 @@
 from collections import Counter
 from helpers import to_date, week_number, trace_function
 from corrections import CORRECTION_POLAND_05_10, CORRECTION_POLAND_06_10
+import pandas as pd
 
 
 def __select_and_sort(data, country):
@@ -71,6 +72,9 @@ def daily(cases: list, country: str) -> list:
 def weekly(
     cases: list, country: str, testing: list = [], hospital_rates: list = []
 ) -> list:
+    """Data aggregated weekly
+
+    """
     sorted_selected_data = __select_and_sort(cases, country)
 
     weekly_cases = __aggregate(
@@ -96,3 +100,5 @@ def weekly(
             }
 
     return __trends_schema(weekly_cases)
+
+

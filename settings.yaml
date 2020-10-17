@@ -4,3 +4,4 @@ ECDC_CASE_DISTRIBUTION_URL: "https://opendata.ecdc.europa.eu/covid19/casedistrib
 ECDC_HOSPITAL_ADMISSION_RATES_URL: "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/json/"
 ECDC_COVID19_TESTING_URL: "https://opendata.ecdc.europa.eu/covid19/testing/json/"
 WIKIPEDIA_POLAND_STATS_URL: "https://en.wikipedia.org/wiki/Statistics_of_the_COVID-19_pandemic_in_Poland"
+COUNTRIES_DATA_FILE: "country-by-population.json"

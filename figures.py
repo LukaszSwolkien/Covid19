@@ -1,23 +1,42 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import helpers
+from helpers import is_num
 
 
 MODE_LINES_N_MARKERS = "lines+markers"
 
 
+@helpers.trace_function("Active cases percentage graph")
+def active_percentage(df, days_no, title):
+    fig = go.Figure()
+
+    fig.add_traces(
+        go.Bar(
+            x=df["Date"][-days_no:],
+            y=df["Active percentage"][-days_no:],
+            name="Active percentage",
+        )
+    )
+    fig.update_layout(
+        title=title,
+        legend_title="Legend",
+    )
+
+    return fig
+
 @helpers.trace_function("Cases and active graph")
 def cases_and_active(df, days_no, title):
-    fig_cNa = go.Figure()
+    fig = go.Figure()
 
-    fig_cNa.add_traces(
+    fig.add_traces(
         go.Bar(
             x=df["Date"][-days_no:],
             y=df["Confirmed daily"][-days_no:],
             name="Confirmed",
         )
     )
-    fig_cNa.add_traces(
+    fig.add_traces(
         go.Scatter(
             x=df["Date"][-days_no:],
             y=df["Active"][-days_no:],
@@ -26,19 +45,19 @@ def cases_and_active(df, days_no, title):
         )
     )
 
-    fig_cNa.update_layout(
+    fig.update_layout(
         title=title,
         legend_title="Legend",
     )
 
-    return fig_cNa
+    return fig
 
 
 @helpers.trace_function("Deaths and recovered graph")
 def deaths_and_recovered(df, days_no, title):
-    fig_rNd = go.Figure()
+    fig = go.Figure()
 
-    fig_rNd.add_traces(
+    fig.add_traces(
         go.Scatter(
             x=df["Date"][-days_no:],
             y=df["Recovered"][-days_no:],
@@ -46,7 +65,7 @@ def deaths_and_recovered(df, days_no, title):
             name="Recovered",
         )
     )
-    fig_rNd.add_traces(
+    fig.add_traces(
         go.Scatter(
             x=df["Date"][-days_no:],
             y=df["Deaths daily"][-days_no:],
@@ -55,12 +74,12 @@ def deaths_and_recovered(df, days_no, title):
         )
     )
 
-    fig_rNd.update_layout(
+    fig.update_layout(
         title=title,
         legend_title="Legend",
     )
 
-    return fig_rNd
+    return fig
 
 
 @helpers.trace_function("Quarantined graph")
@@ -122,15 +141,15 @@ def case_distribution(data: list, title: str) -> go.Figure:
 
 
 @helpers.trace_function("Case distribution multi-graph")
-def case_distribution_subplots(data: list, sub_titles: list, title: str) -> go.Figure:
+def case_distribution_subplots(data: list, country_labels: list, title: str) -> go.Figure:
 
-    assert len(data) == len(sub_titles)
-    N = len(sub_titles)
+    assert len(data) == len(country_labels)
+    N = len(country_labels)
 
     fig = make_subplots(
-        rows=len(sub_titles),
+        rows=len(country_labels),
         cols=1,
-        subplot_titles=sub_titles,
+        subplot_titles=country_labels,
         shared_xaxes=True,
         vertical_spacing=0.05,
     )
@@ -153,7 +172,7 @@ def case_distribution_subplots(data: list, sub_titles: list, title: str) -> go.F
                     if i["dateRep"] in dateRep_common
                 ],
                 mode=MODE_LINES_N_MARKERS,
-                name=f"{sub_titles[n]} hospital rate",
+                name=f"{country_labels[n]} hospital rate",
             ),
             row=n + 1,
             col=1,
@@ -164,7 +183,7 @@ def case_distribution_subplots(data: list, sub_titles: list, title: str) -> go.F
                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
                 y=[i["deaths"] for i in data[n] if i["dateRep"] in dateRep_common],
                 mode=MODE_LINES_N_MARKERS,
-                name=f"{sub_titles[n]} deaths",
+                name=f"{country_labels[n]} deaths",
             ),
             row=n + 1,
             col=1,
@@ -174,10 +193,72 @@ def case_distribution_subplots(data: list, sub_titles: list, title: str) -> go.F
             go.Bar(
                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
                 y=[i["cases"] for i in data[n] if i["dateRep"] in dateRep_common],
-                name=f"{sub_titles[n]} cases",
+                name=f"{country_labels[n]} cases",
             ),
             row=n + 1,
             col=1,
         )
     fig.update_layout(height=1200, width=1200, title_text=title)
     return fig
+
+
+# @helpers.trace_function("Case distribution multi-graph in %")
+# def case_distribution_subplots_percentege(data: list, countries_pop: list, country_names: list, title: str) -> go.Figure:
+
+#     assert len(data) == len(country_names)
+#     N = len(country_names)
+
+#     fig = make_subplots(
+#         rows=len(country_names),
+#         cols=1,
+#         subplot_titles=country_names,
+#         shared_xaxes=True,
+#         vertical_spacing=0.05,
+#     )
+
+#     date_rep_counter = {}
+#     for d in data:
+#         for i in d:
+#             date_rep_counter[i["dateRep"]] = date_rep_counter.get(i["dateRep"], 0) + 1
+
+#     dateRep_common = [k for k, v in date_rep_counter.items() if v == N]
+
+#     for n in range(0, N):
+#         population = countries_pop[country_names[n]]
+#         fig.add_trace(
+#             go.Scatter(
+#                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
+#                 y=[
+#                     i["hospital_rate"]*100/population
+#                     for i in data[n]
+#                     if i["dateRep"] in dateRep_common and is_num(i["hospital_rate"])
+#                 ],
+#                 mode=MODE_LINES_N_MARKERS,
+#                 name=f"{country_names[n]} hospital rate",
+#             ),
+#             row=n + 1,
+#             col=1,
+#         )
+
+#         fig.add_trace(
+#             go.Scatter(
+#                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
+#                 y=[i["deaths"]*100/population for i in data[n] if i["dateRep"] in dateRep_common],
+#                 mode=MODE_LINES_N_MARKERS,
+#                 name=f"{country_names[n]} deaths",
+#             ),
+#             row=n + 1,
+#             col=1,
+#         )
+
+#         fig.add_trace(
+#             go.Bar(
+#                 x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
+#                 y=[i["cases"]*100/population for i in data[n] if i["dateRep"] in dateRep_common],
+#                 name=f"{country_names[n]} cases",
+#             ),
+#             row=n + 1,
+#             col=1,
+#         )
+#     fig.update_layout(height=1200, width=1200, title_text=title)
+#     return fig
