@@ -9,17 +9,34 @@ There are many websites already providing all this data. The purpose of this cod
 
 Create virtual environment
 
-`python3 -m venv venv`
+```bash
+python3 -m venv venv
+```
 
 Activate venv and install dependencies
 
-`. ./venv/bin/activate`
-
-`pip install -r requirements.txt`
+```bash
+. ./venv/bin/activate
+pip install -r requirements.txt
+```
 
 Run jupyter lab
 
-`jupyter lab`
+```bash
+jupyter lab
+```
+
+If you can't see charts in your jupyter notebook, you need to install the extension
+
+```bash
+jupyter labextension install jupyterlab-plotly
+```
+
+After a successful installation, restart the `jupyter lab` server
+
+Note: you need Node.js, download and install it from here:
+
+`https://nodejs.org/en/download/`
 
 ### (Optional) install and run telemetry backend
 
@@ -29,7 +46,9 @@ Please note: This is **optional** step for someone who wants to play around with
 
 * run Jaeger backend from docker
 
-`sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one`
+```bash
+sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one
+```
 
 * run Jaeger UI
 
