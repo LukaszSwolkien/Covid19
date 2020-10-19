@@ -16,8 +16,7 @@ span_processor = BatchExportSpanProcessor(jaeger_exporter)
 trace.get_tracer_provider().add_span_processor(span_processor)
 tracer = trace.get_tracer(__name__)
 
-import ecdc
-import trends
+import World.ecdc as ecdc
 import plotly.graph_objects as go
 
 with tracer.start_as_current_span(f"Poland weekly"):
@@ -25,7 +24,7 @@ with tracer.start_as_current_span(f"Poland weekly"):
     testing = ecdc.testing_by_country_weekly()
     hospital_rates = ecdc.hospitel_admission_rates_weekly()
 
-    data = trends.weekly(cases, "Poland", testing, hospital_rates)
+    data = ecdc.weekly(cases, "Poland", testing, hospital_rates)
 
 fig = go.Figure()
 
