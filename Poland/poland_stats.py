@@ -6,6 +6,7 @@ from config import settings
 
 pd.options.plotting.backend = "plotly"
 
+DATE = "Date"
 QUARANTINED = "Quarantined"
 MONITORED = "Monitored"
 TESTED_TOTAL = "Tested total"
@@ -22,7 +23,7 @@ def covid_19_timeline():
     df = dfs[2]
     df.rename(
         columns={
-            "Date (CET)": "Date",
+            "Date (CET)": DATE,
             "Quarantined[a]": QUARANTINED,
             "Tested (total)[b]": TESTED_TOTAL,
             "Confirmed daily[c]": CONFIRMED_DAILY,

@@ -1,8 +1,11 @@
 import plotly.graph_objects as go
 import common.helpers as helpers
-
+from Poland.poland_stats import DATE, QUARANTINED, CONFIRMED_DAILY, DEATHS_DAILY, ACTIVE, RECOVERED
 
 MODE_LINES_N_MARKERS = "lines+markers"
+
+ACTIVE_PERCENTAGE = "Active percentage"
+QUARANTINED_PERCENTAGE = "Quarantined percentage"
 
 
 @helpers.trace_function("Active cases percentage graph")
@@ -11,9 +14,9 @@ def active_percentage(df, days_no, title):
 
     fig.add_traces(
         go.Bar(
-            x=df["Date"][-days_no:],
-            y=df["Active percentage"][-days_no:],
-            name="Active percentage",
+            x=df[DATE][-days_no:],
+            y=df[ACTIVE_PERCENTAGE][-days_no:],
+            name=ACTIVE_PERCENTAGE,
         )
     )
     fig.update_layout(
@@ -29,18 +32,18 @@ def active_quarantined_percentage_chart(df, days_no):
 
     fig.add_traces(
         go.Scatter(
-            x=df["Date"][-days_no:],
-            y=df["Quarantined percentage"][-days_no:],
-            mode="lines+markers",
-            name="Quarantined",
+            x=df[DATE][-days_no:],
+            y=df[QUARANTINED_PERCENTAGE][-days_no:],
+            mode=MODE_LINES_N_MARKERS,
+            name="Quarantined [%]",
         )
     )
         
     fig.add_traces(
         go.Bar(
-            x=df["Date"][-days_no:],
-            y=df["Active percentage"][-days_no:],
-            name="Active",
+            x=df[DATE][-days_no:],
+            y=df[ACTIVE_PERCENTAGE][-days_no:],
+            name="Active [%]",
         )
     )
     fig.update_layout(
@@ -57,15 +60,15 @@ def cases_and_active(df, days_no, title):
 
     fig.add_traces(
         go.Bar(
-            x=df["Date"][-days_no:],
-            y=df["Confirmed daily"][-days_no:],
+            x=df[DATE][-days_no:],
+            y=df[CONFIRMED_DAILY][-days_no:],
             name="Confirmed",
         )
     )
     fig.add_traces(
         go.Scatter(
-            x=df["Date"][-days_no:],
-            y=df["Active"][-days_no:],
+            x=df[DATE][-days_no:],
+            y=df[ACTIVE][-days_no:],
             mode=MODE_LINES_N_MARKERS,
             name="Active",
         )
@@ -85,16 +88,16 @@ def deaths_and_recovered(df, days_no, title):
 
     fig.add_traces(
         go.Scatter(
-            x=df["Date"][-days_no:],
-            y=df["Recovered"][-days_no:],
+            x=df[DATE][-days_no:],
+            y=df[RECOVERED][-days_no:],
             mode=MODE_LINES_N_MARKERS,
             name="Recovered",
         )
     )
     fig.add_traces(
         go.Scatter(
-            x=df["Date"][-days_no:],
-            y=df["Deaths daily"][-days_no:],
+            x=df[DATE][-days_no:],
+            y=df[DEATHS_DAILY][-days_no:],
             mode=MODE_LINES_N_MARKERS,
             name="Deaths",
         )
@@ -114,9 +117,9 @@ def quarantined(df, days_no, title):
 
     fig_tested.add_traces(
         go.Scatter(
-            x=df["Date"][-days_no:],
-            y=df["Quarantined"][-days_no:],
-            mode="lines+markers",
+            x=df[DATE][-days_no:],
+            y=df[QUARANTINED][-days_no:],
+            mode=MODE_LINES_N_MARKERS,
             name="Quarantined",
         )
     )
