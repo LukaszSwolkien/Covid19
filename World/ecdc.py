@@ -57,7 +57,7 @@ def __aggregate(f, data):
     return agg_data
 
 
-def __trends_schema(data):
+def __timeline_schema(data):
     return [
         {
             DATE_REP: k,
@@ -83,7 +83,7 @@ def monthly(data: list, country: str) -> list:
 
     agg_data = __aggregate(lambda v: f'{v[MONTH]}/{v[YEAR]}', sorted_selected_data)
 
-    return __trends_schema(agg_data)
+    return __timeline_schema(agg_data)
 
 
 @trace_function("Curate data for daily load")
@@ -132,4 +132,4 @@ def weekly(
                 "url": hr.get("url", ""),
             }
 
-    return __trends_schema(weekly_cases)
+    return __timeline_schema(weekly_cases)
