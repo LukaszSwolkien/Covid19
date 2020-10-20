@@ -23,12 +23,15 @@ import Poland.poland_stats as pl
 
 population = countries.load_countries_data()
 
-# with tracer.start_as_current_span(f"Poland weekly"):
-cases = ecdc.cases_by_country()
-testing = ecdc.testing_by_country_weekly()
-hospital_rates = ecdc.hospitel_admission_rates_weekly()
+with tracer.start_as_current_span(f"Poland weekly"):
+    cases = ecdc.cases_by_country()
+    testing = ecdc.testing_by_country_weekly()
+    hospital_rates = ecdc.hospitel_admission_rates_weekly()
 
-data = ecdc.weekly(cases, "Poland", testing, hospital_rates)
+    data = ecdc.weekly(cases, "Poland", testing, hospital_rates)
+
+# data = ecdc.weekly_all_countries(cases, testing, hospital_rates)
+
 
 fig = go.Figure()
 

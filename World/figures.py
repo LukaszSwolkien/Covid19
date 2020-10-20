@@ -2,6 +2,9 @@
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import common.helpers as helpers
+import pandas as pd
+import World.ecdc as ecdc
+import numpy as np
 
 MODE_LINES_N_MARKERS = "lines+markers"
 
@@ -103,6 +106,72 @@ def case_distribution_subplots(data: list, country_labels: list, title: str) -> 
     for d in data:
         for i in d:
             date_rep_counter[i["dateRep"]] = date_rep_counter.get(i["dateRep"], 0) + 1
+
+    dateRep_common = [k for k, v in date_rep_counter.items() if v == N]
+
+    for n in range(0, N):
+
+        fig.add_trace(
+            go.Scatter(
+                x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
+                y=[
+                    i["hospital_rate"]
+                    for i in data[n]
+                    if i["dateRep"] in dateRep_common
+                ],
+                mode=MODE_LINES_N_MARKERS,
+                name=f"{country_labels[n]} hospital rate",
+            ),
+            row=n + 1,
+            col=1,
+        )
+
+        fig.add_trace(
+            go.Scatter(
+                x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
+                y=[i["deaths"] for i in data[n] if i["dateRep"] in dateRep_common],
+                mode=MODE_LINES_N_MARKERS,
+                name=f"{country_labels[n]} deaths",
+            ),
+            row=n + 1,
+            col=1,
+        )
+        
+        fig.add_trace(
+            go.Bar(
+                x=[i["dateRep"] for i in data[n] if i["dateRep"] in dateRep_common],
+                y=[i["cases"] for i in data[n] if i["dateRep"] in dateRep_common],
+                name=f"{country_labels[n]} cases",
+            ),
+            row=n + 1,
+            col=1,
+        )
+
+    fig.update_layout(height=1200, width=1000, title_text=title)
+    return fig
+
+
+
+@helpers.trace_function("Case distribution multi-graph")
+def case_distribution_subplots_df(df: pd.DataFrame, country_labels: list, title: str) -> go.Figure:
+
+    assert len(df) == len(country_labels)
+    N = len(country_labels)
+
+    fig = make_subplots(
+        rows=len(country_labels),
+        cols=1,
+        subplot_titles=country_labels,
+        shared_xaxes=True,
+        vertical_spacing=0.05,
+    )
+    
+    summary = df.groupby(ecdc.dateRep).filter(lambda g: len(g)).reset_index()
+
+    # date_rep_counter = {}
+    # for d in df:
+    #     for i in d:
+    #         date_rep_counter[i["dateRep"]] = date_rep_counter.get(i["dateRep"], 0) + 1
 
     dateRep_common = [k for k, v in date_rep_counter.items() if v == N]
 
