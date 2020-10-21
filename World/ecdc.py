@@ -57,13 +57,6 @@ def __aggregate(f, data):
         summary = Counter(curr) + Counter({CASES: v["cases"], DEATHS: v["deaths"]})
         agg_data[ym] = summary
     return agg_data
-    # res = {}
-    # for k,v in agg_data.items():
-    #     d = dict(v)
-    #     d[COUNTRY] = country
-    #     res[k] = d
-    # return res #dict(map(lambda kv: kv[1].update({COUNTRY:country}), res.items()))
-
 
 def __timeline_dict(data):
     res = {}
@@ -95,18 +88,6 @@ def __timeline_list(data):
         res += e
     return res
 
-@trace_function("Aggregate monthly data")
-def monthly(data: list, country: str) -> list:
-    selector = lambda x: x["countriesAndTerritories"] == country
-    selected_data = list(filter(selector, data))
-    sorted_selected_data = sorted(
-        selected_data, key=lambda x: (int(x[MONTH]), int(x[DAY]))
-    )
-    agg_data = {}
-    agg_data[country] = __aggregate(lambda v: f'{v[MONTH]}/{v[YEAR]}', sorted_selected_data)
-
-    return __timeline_list(agg_data)
-
 
 @trace_function("Curate data for daily load")
 def daily(cases: list, country: str) -> list:
@@ -123,7 +104,7 @@ def daily(cases: list, country: str) -> list:
 
     return list(map(correct_fun, sorted_selected_data))
 
-
+# TODO - refactor to pd.DataFrame and simplify this code.
 @trace_function("Combine and aggregate weekly data")
 def weekly(
     cases: list, country: str, testing: list = [], hospital_rates: list = []
@@ -156,6 +137,7 @@ def weekly(
 
     return __timeline_list(weekly_cases)
 
+# TODO - refactor to pd.DataFrame and simplify this code.
 @trace_function("Combine and aggregate weekly data")
 def weekly_all_countries(
     cases: list, testing: list = [], hospital_rates: list = [], flatten=True,
@@ -173,8 +155,8 @@ def weekly_all_countries(
         )
 
         for td in testing:
-            if td["country"] == country and td["year_week"] in weekly_cases:
-                weekly_cases[td["year_week"]]["testing"] = {
+            if td["country"] == country and td["year_week"] in weekly_cases[country].keys():
+                weekly_cases[country][td["year_week"]]["testing"] = {
                     NEW_CASES: td.get("new_cases"),
                     TESTS_DONE: td.get("tests_done"),
                     TESTING_RATE: td.get("testing_rate"),
@@ -182,8 +164,8 @@ def weekly_all_countries(
                     TESTING_DATA_SOURCE: td.get("testing_data_source", ""),
                 }
         for hr in hospital_rates:
-            if hr["country"] == country and hr["year_week"] in weekly_cases:
-                weekly_cases[hr["year_week"]]["hospital"] = {
+            if hr["country"] == country and hr["year_week"] in weekly_cases[country].keys():
+                weekly_cases[country][hr["year_week"]]["hospital"] = {
                     "value": hr.get("value"),
                     "source": hr.get("source", ""),
                     "url": hr.get("url", ""),
