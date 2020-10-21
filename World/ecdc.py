@@ -4,6 +4,7 @@ from common.helpers import trace_function
 from collections import Counter
 from common.helpers import to_date, week_number, trace_function
 from World.corrections import CORRECTION_POLAND_05_10, CORRECTION_POLAND_06_10
+from typing import Union
 
 DATE_REP = "dateRep"
 YEAR = "year"
@@ -18,6 +19,7 @@ TESTS_DONE = "tests_done"
 TESTING_RATE = "testing_rate"
 POSITIVITY_RATE = "positivity_rate"
 TESTING_DATA_SOURCE = "testing_data_source"
+COUNTRY = 'country'
 
 
 @trace_function("Get cases")
@@ -56,34 +58,35 @@ def __aggregate(f, data):
         agg_data[ym] = summary
     return agg_data
 
+def __timeline_dict(data):
+    res = {}
 
-def __timeline_schema(data):
-    return [
-        {
-            DATE_REP: k,
-            YEAR: v["year"],
-            MONTH: v["month"],
-            DAY: v["day"],
-            CASES: v["cases"],
-            DEATHS: v["deaths"],
-            TESTS_DONE: v.get("testing", {}).get("tests_done", None),
-            HOSPITAL_RATE: v.get("hospital", {}).get("value", None),
-        }
-        for k, v in data.items()
-    ]
+    for d in data:
+        e = [{
+                DATE_REP: k,
+                CASES: v.get("cases", 0),
+                DEATHS: v.get("deaths", 0),
+                TESTS_DONE: v.get("testing", {}).get("tests_done", None),
+                HOSPITAL_RATE: v.get("hospital", {}).get("value", None),
+            } for k, v in data[d].items()]
+        res[d] = e
+    return res
 
 
-@trace_function("Aggregate monthly data")
-def monthly(data: list, country: str) -> list:
-    selector = lambda x: x["countriesAndTerritories"] == country
-    selected_data = list(filter(selector, data))
-    sorted_selected_data = sorted(
-        selected_data, key=lambda x: (int(x[MONTH]), int(x[DAY]))
-    )
+def __timeline_list(data):
+    res = []
 
-    agg_data = __aggregate(lambda v: f'{v[MONTH]}/{v[YEAR]}', sorted_selected_data)
-
-    return __timeline_schema(agg_data)
+    for d in data:
+        e = [{
+                DATE_REP: k,
+                CASES: v.get("cases", 0),
+                COUNTRY: d,
+                DEATHS: v.get("deaths", 0),
+                TESTS_DONE: v.get("testing", {}).get("tests_done", None),
+                HOSPITAL_RATE: v.get("hospital", {}).get("value", None),
+            } for k, v in data[d].items()]
+        res += e
+    return res
 
 
 @trace_function("Curate data for daily load")
@@ -101,7 +104,7 @@ def daily(cases: list, country: str) -> list:
 
     return list(map(correct_fun, sorted_selected_data))
 
-
+# TODO - refactor to pd.DataFrame and simplify this code.
 @trace_function("Combine and aggregate weekly data")
 def weekly(
     cases: list, country: str, testing: list = [], hospital_rates: list = []
@@ -110,8 +113,8 @@ def weekly(
 
     """
     sorted_selected_data = __select_and_sort(cases, country)
-
-    weekly_cases = __aggregate(
+    weekly_cases = {}
+    weekly_cases[country] = __aggregate(
         lambda v: f'{v[YEAR]}-W{week_number(to_date(v))}', sorted_selected_data
     )
 
@@ -132,4 +135,43 @@ def weekly(
                 "url": hr.get("url", ""),
             }
 
-    return __timeline_schema(weekly_cases)
+    return __timeline_list(weekly_cases)
+
+# TODO - refactor to pd.DataFrame and simplify this code.
+@trace_function("Combine and aggregate weekly data")
+def weekly_all_countries(
+    cases: list, testing: list = [], hospital_rates: list = [], flatten=True,
+) -> Union[list,dict]:
+    """Data aggregated weekly
+
+    """
+    weekly_cases = {}
+    countries = list(set(dic['countriesAndTerritories'] for dic in cases)) 
+    for country in countries:
+        sorted_selected_data = __select_and_sort(cases, country)
+
+        weekly_cases[country] = __aggregate(
+            lambda v: f'{v[YEAR]}-W{week_number(to_date(v))}', sorted_selected_data
+        )
+
+        for td in testing:
+            if td["country"] == country and td["year_week"] in weekly_cases[country].keys():
+                weekly_cases[country][td["year_week"]]["testing"] = {
+                    NEW_CASES: td.get("new_cases"),
+                    TESTS_DONE: td.get("tests_done"),
+                    TESTING_RATE: td.get("testing_rate"),
+                    POSITIVITY_RATE: td.get("positivity_rate"),
+                    TESTING_DATA_SOURCE: td.get("testing_data_source", ""),
+                }
+        for hr in hospital_rates:
+            if hr["country"] == country and hr["year_week"] in weekly_cases[country].keys():
+                weekly_cases[country][hr["year_week"]]["hospital"] = {
+                    "value": hr.get("value"),
+                    "source": hr.get("source", ""),
+                    "url": hr.get("url", ""),
+                }
+
+    return __timeline_list(weekly_cases) if flatten else __timeline_dict(weekly_cases)
+
+
+
