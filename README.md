@@ -58,11 +58,15 @@ sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one
 
 `http://localhost:16686/`
 
-* run `jupyther lab` then open `notebooks/ternds.ipynb` and go to above Jaeger UI to choose following service:
+* run `jupyther lab` then open `notebooks/ternds.ipynb` and go to above Jaeger UI to choose one from the following service:
 
-`COVID-19-notebook`
+`COVID-19-Poland-notebook`
 
-* browse details in `COVID-19-notebook: Poland daily` and `COVID-19-notebook: Countries weekly` to see all operations, durations of processing and tags
+or
+
+`COVID-19-World-notebook`
+
+* browse details in Jeager to see all operations, durations of processing and tags. If you don't see anything in the service selection box, run your notebook and refresh Jeager UI when finished.
 
 ## Data sources
 
