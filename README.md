@@ -58,7 +58,7 @@ sudo docker run -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one
 
 `http://localhost:16686/`
 
-* run `jupyther lab` then open `notebooks/ternds.ipynb` and go to above Jaeger UI to choose one from the following service:
+* run `jupyther lab` then open `notebooks/World.ipynb` or `notebooks/Poland.ipynb` and go to above Jaeger UI to choose one from the following service:
 
 `COVID-19-Poland-notebook`
 
