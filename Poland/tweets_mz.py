@@ -6,7 +6,7 @@ TWEET_STARTING_WITH = 'Liczba zakażonych koronawirusem'
 TWEET_MIDDLE = '/'
 TWEET_ENDING_WITH = '\(wszystkie pozytywne przypadki/w tym osoby zmarłe\)' 
 
-def parse_tweets(t: tw.Twitter) -> pd.DataFrame:
+def total_cases_and_deaths(t: tw.Twitter) -> pd.DataFrame:
     # Most of the code below is copy-pasted from https://github.com/anuszka/COVID-19-MZ_GOV_PL/blob/master/code/TwitterCaptureMZ_GOV_PL.py
 
     timeline = t.statuses.user_timeline(screen_name="MZ_GOV_PL")
