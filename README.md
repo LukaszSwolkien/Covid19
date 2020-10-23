@@ -4,7 +4,11 @@ This code collects data on confirmed cases, deaths, tests, hospitalization rates
 
 There are many websites already providing all this data. The purpose of this code is to provide complete flexibility in jupyter lab / notebook analysis for anyone with Python skills who want to check data for themselves
 
+**World COVID-19 cases distribution**
 ![World Covid-19 pandemia ratio](World.png)
+**Poland hospital rate, deaths and new cases trends**
+![Poland  Covid-19 stats](Poland.png)
+
 ## Setup project
 
 Create virtual environment
