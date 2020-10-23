@@ -1,11 +1,15 @@
 ---
+## Static data (updated annually)
+COUNTRIES_DATA_FILE: "./World/country-by-population.json"
+
 # World data sources maintained by the European Centre for Disease Prevention and Control (ECDC)
 ECDC_CASE_DISTRIBUTION_URL: "https://opendata.ecdc.europa.eu/covid19/casedistribution/json/"
 ECDC_HOSPITAL_ADMISSION_RATES_URL: "https://opendata.ecdc.europa.eu/covid19/hospitalicuadmissionrates/json/"
 ECDC_COVID19_TESTING_URL: "https://opendata.ecdc.europa.eu/covid19/testing/json/"
-## Static data (updated annually)
-COUNTRIES_DATA_FILE: "./World/country-by-population.json"
 
 # Poland data sources
 WIKIPEDIA_POLAND_STATS_URL: "https://en.wikipedia.org/wiki/Statistics_of_the_COVID-19_pandemic_in_Poland"
+
+# US data sources
+COVID_TRACKING_US: "https://api.covidtracking.com/v1/us/"
 

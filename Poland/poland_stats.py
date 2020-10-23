@@ -17,7 +17,7 @@ RECOVERED = "Recovered"
 DEATHS_DAILY = "Deaths daily"
 
 
-@helpers.trace_function('Get Poland covid-19 timeline stats')
+@helpers.trace_function("Get Poland covid-19 timeline stats")
 def covid_19_timeline():
     dfs = pd.read_html(settings.WIKIPEDIA_POLAND_STATS_URL)
     df = dfs[2]

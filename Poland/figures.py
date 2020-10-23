@@ -1,6 +1,13 @@
 import plotly.graph_objects as go
 import common.helpers as helpers
-from Poland.poland_stats import DATE, QUARANTINED, CONFIRMED_DAILY, DEATHS_DAILY, ACTIVE, RECOVERED
+from Poland.poland_stats import (
+    DATE,
+    QUARANTINED,
+    CONFIRMED_DAILY,
+    DEATHS_DAILY,
+    ACTIVE,
+    RECOVERED,
+)
 
 MODE_LINES_N_MARKERS = "lines+markers"
 
@@ -26,6 +33,7 @@ def active_percentage(df, days_no, title):
 
     return fig
 
+
 @helpers.trace_function("Active cases and quarantined percentage graph")
 def active_quarantined_percentage_chart(df, days_no):
     fig = go.Figure()
@@ -38,7 +46,7 @@ def active_quarantined_percentage_chart(df, days_no):
             name="Quarantined [%]",
         )
     )
-        
+
     fig.add_traces(
         go.Bar(
             x=df[DATE][-days_no:],
@@ -47,9 +55,9 @@ def active_quarantined_percentage_chart(df, days_no):
         )
     )
     fig.update_layout(
-        title='Poland active cases [%] of population',
+        title="Poland active cases [%] of population",
         legend_title="Legend",
-        yaxis_title="[%] of total population"
+        yaxis_title="[%] of total population",
     )
     return fig
 
@@ -130,5 +138,3 @@ def quarantined(df, days_no, title):
     )
 
     return fig_tested
-
-

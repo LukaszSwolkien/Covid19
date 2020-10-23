@@ -2,6 +2,7 @@ from datetime import date
 from functools import wraps
 from opentelemetry import trace
 import locale
+import math
 
 
 def to_date(d):
@@ -56,7 +57,8 @@ def is_num(s):
         locale.atoi(str(s))
     except ValueError:
         try:
-            locale.atof(str(s))
+            num = locale.atof(str(s))
+            return not math.isnan(num)
         except ValueError:
             return False
     return True
