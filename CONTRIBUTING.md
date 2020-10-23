@@ -1,5 +1,7 @@
 # Contributing to COVID19 data toolset
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/python/black)
+
 Welcome! I'm very happy if you are willing to make the project better.
 
 You can contribute in the following ways:
