@@ -1,5 +1,7 @@
 # COVID-19 data service
 
+You can read [COVID-19 independent analysis](https://lukasz-swolkien.medium.com/covid-19-independent-analysis-7af14735d038) article to learn more details on the project.
+
 This code collects data on confirmed cases, deaths, tests, hospitalization rates, people quarantined, active and recovered (and more) from multiple sources. Includes methods of data analysis to produce meaningful trend graphs and meaningful comparisons between countries based on their population.
 
 There are many websites already providing all this data. The purpose of this code is to provide complete flexibility in jupyter lab / notebook analysis for anyone with Python skills who want to check data for themselves
