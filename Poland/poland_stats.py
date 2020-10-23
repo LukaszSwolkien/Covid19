@@ -21,6 +21,7 @@ DEATHS_DAILY = "Deaths daily"
 def covid_19_timeline():
     dfs = pd.read_html(settings.WIKIPEDIA_POLAND_STATS_URL)
     df = dfs[2]
+
     df.rename(
         columns={
             "Date (CET)": DATE,

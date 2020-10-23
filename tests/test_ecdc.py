@@ -1,9 +1,7 @@
 import World.ecdc as ecdc
 import mock
-import pytest
 from config import settings
 import json
-import os
 
 
 def cases_by_country_mock_data() -> dict:
@@ -17,7 +15,7 @@ def testing_by_country_mock_data() -> dict:
 
 
 def hospital_admission_rates_mock_data() -> dict:
-    with open("./tests/test_hospital_rates.json") as file:
+    with open("./tests/ecdc_hospital_rates.json") as file:
         return json.load(file)
 
 
