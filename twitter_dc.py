@@ -3,19 +3,27 @@ QUERY_STRING = "#koronawiruspolska"
 FREQUENCY_SEC = 600
 
 from opentelemetry import metrics
+from opentelemetry.ext.prometheus import PrometheusMetricsExporter
 from opentelemetry.sdk.metrics import Counter, MeterProvider
 from opentelemetry.sdk.metrics.export import ConsoleMetricsExporter
 from opentelemetry.sdk.metrics.export.controller import PushController
+from prometheus_client import start_http_server
 
+# Start Prometheus client
+start_http_server(port=8000, addr="localhost")
+
+batcher_mode = "stateful"
 metrics.set_meter_provider(MeterProvider())
-meter = metrics.get_meter(__name__, True)
-exporter = ConsoleMetricsExporter()
+meter = metrics.get_meter(__name__, batcher_mode == "stateful")
+# exporter = ConsoleMetricsExporter()
+exporter = PrometheusMetricsExporter("TwitterDC")
 controller = PushController(meter, exporter, 5)
+
 
 staging_labels = {"environment": "staging"}
 
 requests_counter = meter.create_metric(
-    name="requests",
+    name="tweets",
     description=f"{QUERY_STRING} tweets",
     unit="1",
     value_type=int,
