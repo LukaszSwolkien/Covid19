@@ -14,12 +14,12 @@ controller = PushController(meter, exporter, 5)
 
 staging_labels = {"environment": "staging"}
 
-requests_counter = meter.create_metric(
+requests_counter = meter.create_counter(
     name="requests",
     description=f"{QUERY_STRING} tweets",
     unit="1",
     value_type=int,
-    metric_type=Counter,
+    # metric_type=Counter,
     # label_keys=("environment",),
 )
 

@@ -26,19 +26,11 @@ Activate venv and install dependencies
 pip install -r requirements.txt
 ```
 
-Run jupyter lab
+Run jupyter notebook
 
 ```bash
-jupyter lab
+jupyter notebook
 ```
-
-If you can't see charts in your jupyter notebook, you need to install the extension
-
-```bash
-jupyter labextension install jupyterlab-plotly
-```
-
-After a successful installation, restart the `jupyter lab` server
 
 Note: you need Node.js, download and install it from here:
 
