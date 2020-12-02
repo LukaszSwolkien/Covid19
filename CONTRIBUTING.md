@@ -52,7 +52,7 @@ Make your changes in a new git branch
 
 Before submitting a pull request please run unit tests.
 
-`pytest --cov=ia tests/ --cov-config=.coveragerc`
+`python -m pytest tests/`
 
 Commit your changes using a descriptive commit message that follows [Commit format](#commit)
 
