@@ -1,6 +1,7 @@
 #! /usr/bin/python
-QUERY_STRING = "#koronawiruspolska"
-FREQUENCY_SEC = 600
+# QUERY_STRING = "#koronawiruspolska"
+QUERY_STRING = "#covid19 vaccine"
+FREQUENCY_SEC = 10
 
 from opentelemetry import metrics
 from opentelemetry.sdk.metrics import Counter, MeterProvider
@@ -10,7 +11,7 @@ from opentelemetry.sdk.metrics.export.controller import PushController
 metrics.set_meter_provider(MeterProvider())
 meter = metrics.get_meter(__name__, True)
 exporter = ConsoleMetricsExporter()
-controller = PushController(meter, exporter, 5)
+controller = PushController(meter, exporter, FREQUENCY_SEC)
 
 staging_labels = {"environment": "staging"}
 
