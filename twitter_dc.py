@@ -48,15 +48,15 @@ if __name__ == "__main__":
 
     today_str = date.today().strftime("%Y.%m.%d")
     file_name = f"./Poland/MZ_Tweets/{today_str}-MZ_GOV_PL.csv"
-    df.to_csv(file_name, index = False, header=True)
+    df.to_csv(file_name, index=False, header=True)
 
     while True:
         covid_tweets = t.search.tweets(q=QUERY_STRING)
-        s = covid_tweets.get('statuses', [])
+        s = covid_tweets.get("statuses", [])
 
-        now =  datetime.now(tzutc())
+        now = datetime.now(tzutc())
         x_ago = now - timedelta(seconds=FREQUENCY_SEC)
-        selected = [item for item in s if parse(item['created_at'])>x_ago]
+        selected = [item for item in s if parse(item["created_at"]) > x_ago]
         no_selected = len(selected)
         requests_counter.add(no_selected, staging_labels)
         for tweet in selected:
@@ -65,5 +65,3 @@ if __name__ == "__main__":
 
 #     created_at = parse(first['created_at'])
 #     tzinfo = created_at.tzinfo
-
-
