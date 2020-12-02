@@ -20,7 +20,7 @@ DEATHS_DAILY = "Deaths daily"
 @helpers.trace_function("Get Poland covid-19 timeline stats")
 def covid_19_timeline():
     dfs = pd.read_html(settings.WIKIPEDIA_POLAND_STATS_URL)
-    df = dfs[2]
+    df = dfs[1]
 
     df.rename(
         columns={
@@ -33,9 +33,11 @@ def covid_19_timeline():
         },
         inplace=True,
     )
-
-    del df["Unofficial deaths daily[f]"]
-    del df["Source(s)[g]"]
+    try:
+        del df["Unofficial deaths daily[f]"]
+        del df["Source(s)[g]"]
+    except:
+        pass
 
     date_format = "%d %B %Y"  # ex.: 30 September 2020
 
