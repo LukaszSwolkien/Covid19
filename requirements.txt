@@ -80,7 +80,7 @@ traitlets==5.0.5
 twitter==1.18.0
 typed-ast==1.4.1
 typing-extensions==3.7.4.3
-urllib3==1.26.2
+urllib3==1.26.5
 wcwidth==0.2.5
 webencodings==0.5.1
 widgetsnbextension==3.5.1
